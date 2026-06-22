@@ -38,7 +38,7 @@ Provide exactly 3 ads, exactly 5 shots in the video, and exactly 3 social posts.
 export async function POST(req: Request) {
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
-      { error: "Missing ANTHROPIC_API_KEY. Add it in your Vercel project settings (or .env.local for local dev)." },
+      { error: "Missing ANTHROPIC_API_KEY. Add it in your Netlify site settings (Site configuration → Environment variables), or in .env.local for local dev." },
       { status: 500 }
     );
   }

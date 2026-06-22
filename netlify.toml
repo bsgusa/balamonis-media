@@ -1,3 +1,12 @@
 [build]
   command = "npm run build"
   publish = ".next"
+
+# Official Next.js Runtime. Netlify auto-detects Next.js, but pinning the plugin
+# here makes builds reproducible and guarantees the API route (/api/generate)
+# and server rendering work in production.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "20"
