@@ -21,6 +21,70 @@ const PRESETS = [
   { brand: "Pulse Athletic", what: "Performance running shoes for everyday athletes", audience: "Gen-Z runners", vibe: "High-energy, kinetic, bold" },
 ];
 
+const MARQUEE = [
+  "AD CONCEPTS",
+  "SHOT-LISTED VIDEO",
+  "ORIGINAL TRACK",
+  "SOCIAL POSTS",
+  "TAGLINES",
+  "DIRECTOR'S NOTES",
+  "PRODUCED IN SECONDS",
+];
+
+const iconProps = {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.5,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  className: "h-7 w-7",
+};
+
+const FEATURES = [
+  {
+    title: "Ad concepts",
+    desc: "Scroll-stopping hooks, body copy, and CTAs across formats — ready to run.",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5Z" />
+        <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+        <path d="M18.5 6a9 9 0 0 1 0 12" />
+      </svg>
+    ),
+  },
+  {
+    title: "Shot-listed video",
+    desc: "A timecoded reel — the hook, visuals, on-screen text, and audio for every beat.",
+    icon: (
+      <svg {...iconProps}>
+        <circle cx="12" cy="12" r="9.25" />
+        <path d="M10 8.5 16 12l-6 3.5Z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Original track",
+    desc: "A genre, BPM, hook lyric, and verse — a soundbed written for the spot.",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M9 17V5l11-2v12" />
+        <circle cx="6" cy="17" r="3" />
+        <circle cx="17" cy="15" r="3" />
+      </svg>
+    ),
+  },
+  {
+    title: "Social posts",
+    desc: "Platform-ready captions and hashtags to launch the moment it lands.",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M21 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-5.3A8 8 0 1 1 21 11.5Z" />
+      </svg>
+    ),
+  },
+];
+
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <span className="font-mono text-[10px] tracking-marquee text-gold/70 uppercase">{children}</span>
@@ -106,42 +170,100 @@ export default function Page() {
   return (
     <main className="relative min-h-screen overflow-x-hidden">
       {/* ── Top bar ───────────────────────────────── */}
-      <header className="flex items-center justify-between border-b border-line px-6 py-5 md:px-12">
+      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-ink/70 px-6 py-5 backdrop-blur-md md:px-12">
         <div className="flex items-baseline gap-3">
           <span className="font-display text-2xl text-cream">Balamonis</span>
           <span className="font-mono text-[10px] tracking-marquee text-muted">MEDIA</span>
         </div>
-        <span className="hidden font-mono text-[10px] tracking-marquee text-gold/70 md:block animate-flicker">
+        <a
+          href="#studio"
+          className="hidden font-mono text-[10px] tracking-marquee text-gold/70 transition hover:text-gold md:block animate-flicker"
+        >
           ● REC — STUDIO ONLINE
-        </span>
+        </a>
       </header>
 
       {/* ── Hero ──────────────────────────────────── */}
-      <section className="relative px-6 pb-20 pt-24 text-center md:px-12 md:pt-32">
+      <section className="relative overflow-hidden px-6 pb-16 pt-24 text-center md:px-12 md:pt-32">
+        {/* ambient spotlight */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-[-7rem] -z-10 h-[34rem] w-[34rem] animate-glow rounded-full bg-gold/15 blur-[140px]"
+        />
         <div className="animate-fade-up">
           <Label>Reel 01 — The AI Creative Engine</Label>
           <h1 className="mx-auto mt-6 max-w-4xl font-display text-5xl leading-[1.05] text-cream md:text-7xl lg:text-8xl">
             Type a brief.
             <br />
-            <span className="text-gold">We&apos;ll direct the rest.</span>
+            <span className="bg-gradient-to-r from-gold via-cream to-gold bg-clip-text text-transparent">
+              We&apos;ll direct the rest.
+            </span>
           </h1>
           <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted md:text-lg">
             One line about your brand becomes a full campaign — ad concepts, a shot-listed video,
             an original track, and social — produced in seconds, not weeks.
           </p>
-          <a
-            href="#studio"
-            className="group mt-12 inline-flex items-center gap-3 border border-gold/40 bg-gold/5 px-7 py-3.5 font-mono text-xs tracking-marquee text-gold transition hover:bg-gold hover:text-ink"
-          >
-            ENTER THE STUDIO
-            <span className="transition group-hover:translate-x-1">→</span>
-          </a>
+          <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="#studio"
+              className="group inline-flex items-center gap-3 border border-gold bg-gold px-7 py-3.5 font-mono text-xs tracking-marquee text-ink shadow-[0_0_45px_-8px_rgba(227,190,116,0.55)] transition hover:bg-goldsoft"
+            >
+              ENTER THE STUDIO
+              <span className="transition group-hover:translate-x-1">→</span>
+            </a>
+            <a
+              href="#deliverables"
+              className="inline-flex items-center gap-3 border border-line px-7 py-3.5 font-mono text-xs tracking-marquee text-muted transition hover:border-gold/50 hover:text-gold"
+            >
+              SEE WHAT YOU GET
+            </a>
+          </div>
         </div>
-        <div className="mx-auto mt-20 flex max-w-3xl items-center justify-center gap-6 font-mono text-[10px] tracking-marquee text-muted/60">
-          <span>ADS</span><span className="text-line">/</span>
-          <span>VIDEO</span><span className="text-line">/</span>
-          <span>MUSIC</span><span className="text-line">/</span>
-          <span>SOCIAL</span>
+      </section>
+
+      {/* ── Marquee band ──────────────────────────── */}
+      <div className="relative overflow-hidden border-y border-line bg-panel/40 py-4">
+        <div className="flex w-max animate-marquee items-center whitespace-nowrap font-mono text-[11px] tracking-marquee text-muted/50">
+          {Array.from({ length: 2 }).map((_, k) => (
+            <div key={k} className="flex items-center" aria-hidden={k === 1}>
+              {MARQUEE.map((m, i) => (
+                <span key={i} className="flex items-center">
+                  <span className="px-6">{m}</span>
+                  <span className="text-gold/40">✦</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Deliverables ──────────────────────────── */}
+      <section id="deliverables" className="px-6 py-20 md:px-12">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-12 text-center">
+            <Label>The Deliverables</Label>
+            <h2 className="mt-3 font-display text-3xl text-cream md:text-5xl">
+              One brief. A full reel.
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted md:text-base">
+              Every campaign comes back with four production-ready pieces — concepted, written,
+              and shot-listed, in one take.
+            </p>
+          </div>
+          <div className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {FEATURES.map((f) => (
+              <div
+                key={f.title}
+                className="group bg-panel p-7 transition-colors duration-300 hover:bg-panel2"
+              >
+                <div className="text-gold transition-transform duration-300 group-hover:-translate-y-1">
+                  {f.icon}
+                </div>
+                <h3 className="mt-5 font-display text-xl text-cream">{f.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{f.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -172,7 +294,7 @@ export default function Page() {
             ))}
           </div>
 
-          <div className="space-y-6 border border-line bg-panel/60 p-6 md:p-8">
+          <div className="space-y-6 border border-line bg-panel/60 p-6 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] md:p-8">
             <Field label="Brand name" value={brand} onChange={setBrand} placeholder="e.g. Balamonis Media" />
             <Field
               label="What it does"
@@ -187,13 +309,15 @@ export default function Page() {
             </div>
 
             {error && (
-              <p className="font-mono text-xs text-teal">⚠ {error}</p>
+              <p className="border border-teal/30 bg-teal/5 px-4 py-3 font-mono text-xs text-teal">
+                ⚠ {error}
+              </p>
             )}
 
             <button
               onClick={generate}
               disabled={loading}
-              className="group relative w-full overflow-hidden border border-gold bg-gold px-6 py-4 font-mono text-xs tracking-marquee text-ink transition hover:bg-goldsoft disabled:cursor-not-allowed disabled:opacity-60"
+              className="group relative w-full overflow-hidden border border-gold bg-gold px-6 py-4 font-mono text-xs tracking-marquee text-ink shadow-[0_0_45px_-10px_rgba(227,190,116,0.6)] transition hover:bg-goldsoft disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading && (
                 <span className="absolute inset-x-0 top-0 h-full bg-cream/20 animate-scan" />
@@ -205,6 +329,26 @@ export default function Page() {
           </div>
         </div>
       </section>
+
+      {/* ── Rolling… (loading skeleton) ───────────── */}
+      {loading && (
+        <section className="border-t border-line px-6 py-20 md:px-12">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-center font-mono text-[10px] tracking-marquee text-gold/70 animate-flicker">
+              ● ROLLING — DIRECTING YOUR CAMPAIGN
+            </p>
+            <div className="mt-10 space-y-px overflow-hidden border border-line bg-line">
+              <div className="h-28 animate-pulse bg-panel" />
+              <div className="grid gap-px sm:grid-cols-3">
+                <div className="h-44 animate-pulse bg-panel" />
+                <div className="h-44 animate-pulse bg-panel" />
+                <div className="h-44 animate-pulse bg-panel" />
+              </div>
+              <div className="h-32 animate-pulse bg-panel" />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── The Reel (output) ─────────────────────── */}
       {campaign && (
@@ -247,7 +391,7 @@ export default function Page() {
             <Block tag="BMS.ADS" title="The Ads">
               <div className="grid gap-px bg-line md:grid-cols-3">
                 {campaign.ads?.map((ad, i) => (
-                  <div key={i} className="bg-panel p-6">
+                  <div key={i} className="group bg-panel p-6 transition-colors duration-300 hover:bg-panel2">
                     <div className="mb-4 flex items-center justify-between">
                       <span className="font-mono text-[10px] tracking-marquee text-gold/70">
                         AD.0{i + 1}
@@ -256,7 +400,7 @@ export default function Page() {
                     </div>
                     <p className="font-display text-2xl leading-tight text-cream">{ad.hook}</p>
                     <p className="mt-3 text-sm leading-relaxed text-muted">{ad.body}</p>
-                    <p className="mt-5 inline-block border border-gold/40 px-3 py-1.5 font-mono text-[11px] text-gold">
+                    <p className="mt-5 inline-block border border-gold/40 px-3 py-1.5 font-mono text-[11px] text-gold transition group-hover:bg-gold/10">
                       {ad.cta}
                     </p>
                   </div>
@@ -283,7 +427,7 @@ export default function Page() {
                   </div>
                   <div className="divide-y divide-line">
                     {campaign.video.shots?.map((s, i) => (
-                      <div key={i} className="grid gap-3 p-5 md:grid-cols-[90px_1fr] md:gap-6">
+                      <div key={i} className="grid gap-3 p-5 transition-colors hover:bg-panel2/50 md:grid-cols-[90px_1fr] md:gap-6">
                         <span className="font-mono text-xs text-gold">{s.tc}</span>
                         <div className="space-y-1.5">
                           <p className="text-sm text-cream">{s.visual}</p>
@@ -340,7 +484,7 @@ export default function Page() {
             <Block tag="BMS.SOCIAL" title="The Social">
               <div className="grid gap-px bg-line md:grid-cols-3">
                 {campaign.social?.map((s, i) => (
-                  <div key={i} className="bg-panel p-6">
+                  <div key={i} className="group bg-panel p-6 transition-colors duration-300 hover:bg-panel2">
                     <span className="font-mono text-[10px] tracking-marquee text-gold/70">
                       {s.platform}
                     </span>
@@ -366,10 +510,17 @@ export default function Page() {
       )}
 
       {/* ── Footer ────────────────────────────────── */}
-      <footer className="border-t border-line px-6 py-10 text-center md:px-12">
-        <p className="font-display text-xl text-cream">Balamonis Media</p>
-        <p className="mt-2 font-mono text-[10px] tracking-marquee text-muted">
+      <footer className="relative border-t border-line px-6 py-14 text-center md:px-12">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-0 h-px w-40 -translate-x-1/2 bg-gradient-to-r from-transparent via-gold/50 to-transparent"
+        />
+        <p className="font-display text-2xl text-cream">Balamonis Media</p>
+        <p className="mt-3 font-mono text-[10px] tracking-marquee text-muted">
           AI-AUGMENTED PRODUCTION · ADS · FILM · MUSIC · OTT
+        </p>
+        <p className="mt-4 font-mono text-[10px] tracking-marquee text-muted/50">
+          © {new Date().getFullYear()} BALAMONIS MEDIA
         </p>
       </footer>
     </main>
