@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
+import { detectCategory, buildUpsell } from "./upsell";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -35,6 +36,7 @@ Return ONLY valid JSON (no markdown, no backticks, no preamble) matching exactly
 
 Provide exactly 3 ads, exactly 5 shots in the video, and exactly 3 social posts.`;
 
+
 export async function POST(req: Request) {
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
@@ -58,6 +60,9 @@ export async function POST(req: Request) {
     );
   }
 
+  // Server-side category detection for the Lexora AI cross-sell.
+  const upsell = buildUpsell(detectCategory(brand, what));
+
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
   const userBrief = `BRAND: ${brand}
@@ -76,7 +81,7 @@ Generate the full campaign now. JSON only.`;
     });
 
     const text = msg.content
-      .filter((b): b is Anthropic.TextBlock => b.type === "text")
+      .filter((b): b is Extract<(typeof msg.content)[number], { type: "text" }>)
       .map((b) => b.text)
       .join("")
       .trim();
@@ -93,7 +98,7 @@ Generate the full campaign now. JSON only.`;
       data = JSON.parse(cleaned.slice(start, end + 1));
     }
 
-    return NextResponse.json({ campaign: data });
+    return NextResponse.json({ campaign: data, upsell });
   } catch (err: any) {
     const message =
       err?.status === 401
