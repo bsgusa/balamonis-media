@@ -80,9 +80,11 @@ Generate the full campaign now. JSON only.`;
       messages: [{ role: "user", content: userBrief }],
     });
 
+    // Narrow with a ternary instead of an `is`-predicate: Next 14's SWC parser
+    // rejects `b is Extract<(typeof x)[number], …>` inside .filter() even
+    // though it is valid TypeScript, which fails the whole build.
     const text = msg.content
-      .filter((b): b is Extract<(typeof msg.content)[number], { type: "text" }>)
-      .map((b) => b.text)
+      .map((b) => (b.type === "text" ? b.text : ""))
       .join("")
       .trim();
 

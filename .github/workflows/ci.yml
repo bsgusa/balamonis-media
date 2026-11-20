@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main, feature/*, fix/*]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for exposed secrets
+        run: |
+          # Length AND boundary are both required (same rule as the other
+          # bsgusa repos) so prose like "after-task-async-storage" never trips it.
+          if grep -rE '(^|[^A-Za-z0-9])(sbp_[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9_-]{20,}|sk-ant-[A-Za-z0-9_-]{20,})' \
+               --include='*.ts' --include='*.tsx' --include='*.js' --include='*.json' \
+               --include='*.md' --include='*.yml' --include='*.yaml' \
+               --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=.next . ; then
+            echo "::error::Potential secret detected in repo. Remove before merging."
+            exit 1
+          fi
+
+      - name: Lint
+        run: npm run lint
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
